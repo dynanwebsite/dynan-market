@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>DYNAN MARKET | Premium Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --accent: #F4E883;
+            --accent-dark: #D4A017;
+            --accent-glow: rgba(244,232,131,0.25);
+            --gold-gradient: linear-gradient(135deg, #F4E883, #D4A017);
+        }
+        body.dark {
+            --bg-primary: #0A0A08;
+            --bg-secondary: #141412;
+            --bg-card: rgba(20,20,18,0.96);
+            --text-primary: #FFFFFF;
+            --text-secondary: #D0D0C0;
+            --border: rgba(244,232,131,0.2);
+            --glass-bg: rgba(20,20,18,0.92);
+            --glass-border: rgba(244,232,131,0.25);
+            --shadow: 0 12px 48px rgba(0,0,0,0.5);
+            --input-bg: #2A2A20;
+            --toast-bg: #1A1A14;
+            --sidebar-bg: #0D0D09;
+        }
+        body.light {
+            --bg-primary: #F8F8F5;
+            --bg-secondary: #FFFFFF;
+            --bg-card: rgba(255,255,255,0.98);
+            --text-primary: #0D0D09;
+            --text-secondary: #4A4A3A;
+            --border: rgba(212,160,23,0.2);
+            --glass-bg: rgba(255,255,255,0.95);
+            --glass-border: rgba(212,160,23,0.3);
+            --shadow: 0 12px 48px rgba(0,0,0,0.08);
+            --input-bg: #FFFFFF;
+            --toast-bg: #FFFFFF;
+            --sidebar-bg: #F8F8F5;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        h1, h2, h3, .logo-text { font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: 1px; }
+        h2 { font-size: 2.2rem; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.6rem; margin-bottom: 1rem; }
+        h4 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+        .glass { background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 28px; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; transition: all 0.3s ease; overflow: hidden; }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--accent); }
+
+        .btn-gold {
+            background: var(--gold-gradient); border: none; color: #0D0D09; padding: 16px 36px; border-radius: 60px;
+            font-weight: 700; font-size: 1.1rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+            gap: 12px; transition: all 0.3s ease; min-width: 200px;
+        }
+        .btn-gold:hover { transform: scale(1.03); box-shadow: 0 0 25px var(--accent-glow); }
+        .btn-outline {
+            background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 14px 32px;
+            border-radius: 60px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; min-width: 160px;
+        }
+        .btn-outline:hover { background: var(--accent); color: #0D0D09; }
+        .btn-danger { background: rgba(220,53,69,0.9); border: none; color: white; padding: 10px 20px; border-radius: 14px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.3s; }
+        .btn-danger:hover { background: rgba(220,53,69,1); transform: scale(1.02); }
+        .btn-small { background: var(--accent); border: none; color: #0D0D09; padding: 10px 20px; border-radius: 25px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .btn-small:hover { transform: scale(1.03); }
+        .qty-btn { background: var(--border); border: none; width: 38px; height: 38px; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1.2rem; color: var(--text-primary); transition: all 0.3s; }
+        .qty-btn:hover { background: var(--accent); color: #0D0D09; transform: scale(1.05); }
+        .btn-add-cart {
+            background: var(--gold-gradient); border: none; color: #0D0D09; padding: 14px 28px; border-radius: 60px;
+            font-weight: 700; font-size: 1rem; cursor: pointer; width: 100%; transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-add-cart:hover { transform: scale(1.02); box-shadow: 0 0 20px var(--accent-glow); }
+
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 5%;
+            position: sticky; top: 0; z-index: 100; background: var(--glass-bg); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .menu-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--accent); width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .menu-btn:hover { background: var(--accent-glow); }
+        .logo { text-align: center; cursor: pointer; }
+        .logo-text { font-size: 1.8rem; background: var(--gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .logo-sub { font-size: 0.65rem; color: var(--accent); letter-spacing: 4px; margin-top: 4px; }
+        .theme-toggle { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 50%; width: 48px; height: 48px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+
+        .sidebar {
+            position: fixed; top: 0; left: -320px; width: 300px; height: 100%; background: var(--sidebar-bg);
+            border-right: 1px solid var(--glass-border); z-index: 1000; transition: left 0.3s ease; padding: 1.5rem; overflow-y: auto;
+        }
+        .sidebar.open { left: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .sidebar-header h3 { font-size: 1.4rem; margin: 0; }
+        .close-sidebar { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-primary); }
+        .sidebar-menu { display: flex; flex-direction: column; gap: 0.5rem; }
+        .sidebar-menu button { background: none; border: none; color: var(--text-primary); font-size: 1.05rem; padding: 0.9rem 1.2rem; text-align: left; cursor: pointer; border-radius: 14px; transition: all 0.3s; }
+        .sidebar-menu button i { width: 30px; font-size: 1.1rem; }
+        .sidebar-menu button:hover, .sidebar-menu button.active { background: var(--accent); color: #0D0D09; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
+        .overlay.show { display: block; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem 5%; min-height: calc(100vh - 150px); }
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .auth-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 2rem; }
+        .auth-card { max-width: 500px; width: 100%; padding: 2.5rem; background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 36px; box-shadow: var(--shadow); }
+        .auth-header { text-align: center; margin-bottom: 1.8rem; }
+        .auth-logo { font-size: 2.5rem; background: var(--gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .auth-subtitle { font-size: 0.8rem; color: var(--accent); letter-spacing: 3px; }
+        .auth-title { font-size: 1.2rem; margin-top: 1rem; color: var(--text-secondary); }
+        .auth-divider { width: 60px; height: 2px; background: var(--accent); margin: 0.8rem auto 0; }
+
+        .hero { text-align: center; padding: 2.5rem; margin-bottom: 2rem; border-radius: 28px; }
+        .hero h2 { font-size: 2.2rem; margin-bottom: 0.8rem; }
+        .hero p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.2rem; }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem; margin-top: 1.5rem; }
+        .product-card { padding: 1.5rem; }
+        .product-name { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .product-type-badge { font-size: 0.7rem; padding: 4px 12px; border-radius: 20px; background: var(--accent); color: #0D0D09; display: inline-block; margin-bottom: 10px; }
+        .product-price { font-size: 1.6rem; font-weight: bold; color: var(--accent); margin: 10px 0; }
+        .variant-select { width: 100%; padding: 12px 16px; margin: 12px 0; border-radius: 16px; background: var(--input-bg); border: 1px solid var(--border); color: var(--text-primary); font-size: 1rem; }
+        .qty-control { display: flex; align-items: center; gap: 15px; margin: 14px 0; justify-content: center; }
+        .stock-badge { font-size: 0.7rem; padding: 4px 12px; border-radius: 20px; background: var(--border); display: inline-block; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1.2rem; margin-top: 1.2rem; }
+        .stat-card { text-align: center; padding: 1.2rem; border-radius: 24px; }
+        .stat-number { font-size: 2.2rem; font-weight: bold; color: var(--accent); font-family: 'Cormorant Garamond', serif; }
+
+        .form-group { margin-bottom: 1.2rem; }
+        label { font-weight: 600; margin-bottom: 0.5rem; display: block; color: var(--accent); font-size: 0.85rem; }
+        input, select, textarea { width: 100%; padding: 12px 16px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 16px; color: var(--text-primary); font-size: 1rem; transition: all 0.3s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
+        .password-wrapper { position: relative; width: 100%; }
+        .password-wrapper input { padding-right: 50px; }
+        .toggle-password { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--accent); background: none; border: none; font-size: 1.2rem; }
+
+        .variant-item { display: flex; gap: 12px; margin-bottom: 12px; align-items: center; }
+        .variant-item input { flex: 1; margin: 0; }
+
+        .cart-item { padding: 1.2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .cart-item-details { flex: 2; }
+        .cart-item-price { font-weight: bold; color: var(--accent); font-size: 1.1rem; }
+        .cart-item-qty { display: flex; align-items: center; gap: 10px; }
+
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-content { max-width: 420px; width: 90%; padding: 2rem; text-align: center; border-radius: 32px; }
+        .modal-content img { max-width: 220px; margin: 1rem auto; border-radius: 20px; }
+        .modal-content .btn-gold { width: 100%; }
+
+        .toast { position: fixed; bottom: 30px; right: 30px; background: var(--toast-bg); border-left: 5px solid var(--accent); padding: 1rem 2rem; border-radius: 18px; box-shadow: var(--shadow); z-index: 1500; animation: slideIn 0.3s ease; font-size: 0.95rem; font-weight: 500; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        footer { text-align: center; padding: 1.5rem; border-top: 1px solid var(--border); margin-top: 2.5rem; font-size: 0.85rem; }
+        .empty-state { text-align: center; padding: 3rem; background: var(--glass-bg); border-radius: 28px; border: 1px dashed var(--accent); }
+        .empty-state i { font-size: 3rem; margin-bottom: 1rem; }
+        .badge-owner { background: var(--accent); color: #0D0D09; padding: 3px 10px; border-radius: 14px; font-size: 0.7rem; }
+
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center;
+            z-index: 9999; flex-direction: column; gap: 20px;
+        }
+        .loading-spinner {
+            width: 60px; height: 60px; border: 5px solid var(--border);
+            border-top: 5px solid var(--accent); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loading-text { color: var(--text-primary); font-size: 1.2rem; }
+
+        @media (max-width: 768px) {
+            body { font-size: 15px; }
+            .container { padding: 1rem; }
+            .hero h2 { font-size: 1.6rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .btn-gold, .btn-outline { padding: 12px 24px; font-size: 0.9rem; min-width: auto; width: 100%; }
+        }
+    </style>
+</head>
+<body class="dark">
+    <div id="loading" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">⏳ Memuat DYNAN MARKET...</div>
+    </div>
+    <div id="app"></div>
+
+<script>
+    // ==================== KONFIGURASI ====================
+    const API_URL = "https://dynan-market.onrender.com";
+    const OWNER_USERNAME = "dynan";
+    const OWNER_PASSWORD = "257368419";
+    const WHATSAPP_NUMBER = "6283837266823";
+    const MAPS_LINK = "https://maps.app.goo.gl/fr1AMLqnS6DnV1m69";
+    const QRIS_LINK = "https://freeimage.host/i/C9S8XI9";
+
+    let currentUser = null;
+    let products = [];
+    let users = [];
+    let carts = {};
+    let orders = [];
+    let ratings = [];
+    let comments = [];
+    let totalVisits = 0;
+
+    // ==================== API CALLS ====================
+    async function fetchData() {
+        try {
+            const [productsRes, usersRes, cartsRes, ordersRes, ratingsRes, commentsRes, visitsRes] = await Promise.all([
+                fetch(`${API_URL}/products`),
+                fetch(`${API_URL}/users`),
+                fetch(`${API_URL}/carts`),
+                fetch(`${API_URL}/orders`),
+                fetch(`${API_URL}/ratings`),
+                fetch(`${API_URL}/comments`),
+                fetch(`${API_URL}/totalVisits`)
+            ]);
+            
+            products = await productsRes.json();
+            users = await usersRes.json();
+            carts = await cartsRes.json();
+            orders = await ordersRes.json();
+            ratings = await ratingsRes.json();
+            comments = await commentsRes.json();
+            const visitsData = await visitsRes.json();
+            totalVisits = visitsData.length > 0 ? visitsData[0].count : 0;
+            
+            document.getElementById("loading").style.display = "none";
+            renderApp();
+        } catch (error) {
+            document.getElementById("loading").innerHTML = `
+                <div style="text-align:center; color:var(--text-primary);">
+                    <i class="fas fa-wifi" style="font-size:3rem; color:var(--accent);"></i>
+                    <h3>❌ Gagal terhubung ke server!</h3>
+                    <p style="margin:10px 0;">Pastikan server JSON sudah berjalan.</p>
+                    <button class="btn-gold" onclick="location.reload()">🔄 Refresh</button>
+                </div>
+            `;
+        }
+    }
+
+    async function saveData(endpoint, data) {
+        const response = await fetch(`${API_URL}/${endpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        return await response.json();
+    }
+
+    async function updateData(endpoint, id, data) {
+        const response = await fetch(`${API_URL}/${endpoint}/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        return await response.json();
+    }
+
+    async function deleteData(endpoint, id) {
+        await fetch(`${API_URL}/${endpoint}/${id}`, { method: 'DELETE' });
+    }
+
+    // ==================== TOAST ====================
+    function showToast(msg, isError = false) {
+        let toast = document.createElement("div");
+        toast.className = "toast";
+        toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i> ${msg}`;
+        if (isError) toast.style.borderLeftColor = "#dc3545";
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3500);
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle("dark");
+        document.body.classList.toggle("light");
+    }
+
+    function togglePassword(inputId, iconId) {
+        let input = document.getElementById(inputId);
+        let icon = document.getElementById(iconId);
+        if (input && icon) {
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    }
+
+    // ==================== AUTH ====================
+    async function handleLogin() {
+        let username = document.getElementById("loginUsername")?.value.trim();
+        let password = document.getElementById("loginPassword")?.value;
+        if (!username || !password) { showToast("Isi username & password!", true); return; }
+        
+        const found = users.find(u => u.username === username && u.password === password);
+        if (found) {
+            currentUser = found;
+            localStorage.setItem("currentUser", JSON.stringify(found));
+            showToast(`✅ Selamat datang, ${username}!`);
+            renderApp();
+        } else {
+            showToast("❌ Login gagal! Username atau password salah.", true);
+        }
+    }
+
+    async function handleRegister() {
+        let username = document.getElementById("regUsername")?.value.trim();
+        let password = document.getElementById("regPassword")?.value;
+        let email = document.getElementById("regEmail")?.value.trim();
+        if (!username || !password) { showToast("Isi semua field!", true); return; }
+        if (username.length < 3) { showToast("Username min 3 karakter!", true); return; }
+        if (password.length < 3) { showToast("Password min 3 karakter!", true); return; }
+        if (username === OWNER_USERNAME) { showToast("Username tidak tersedia!", true); return; }
+        if (users.find(u => u.username === username)) { showToast("Username sudah terdaftar!", true); return; }
+        
+        const newUser = {
+            username, password, email: email || "",
+            role: "customer",
+            createdAt: new Date().toISOString()
+        };
+        const saved = await saveData("users", newUser);
+        users.push(saved);
+        showToast("✅ Registrasi berhasil! Silakan login.");
+        showLoginForm();
+    }
+
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem("currentUser");
+        showToast("Anda telah logout.");
+        renderApp();
+    }
+
+    // ==================== SIDEBAR ====================
+    function closeSidebar() {
+        document.getElementById("sidebar")?.classList.remove("open");
+        document.getElementById("overlay")?.classList.remove("show");
+    }
+    function openSidebar() {
+        document.getElementById("sidebar")?.classList.add("open");
+        document.getElementById("overlay")?.classList.add("show");
+    }
+
+    function showPage(pageId) {
+        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+        document.getElementById(`page-${pageId}`)?.classList.add("active");
+        closeSidebar();
+        if (pageId === "home") renderHome();
+        if (pageId === "products") renderProducts();
+        if (pageId === "cart") renderCart();
+        if (pageId === "orders") renderOrders();
+        if (pageId === "reviews") renderReviews();
+        if (pageId === "account") renderAccount();
+        if (pageId === "manage-products") renderManageProducts();
+    }
+
+    // ==================== CART ====================
+    function getCartKey(productId, variantIndex = null) {
+        return variantIndex !== null ? `${productId}_v${variantIndex}` : `${productId}`;
+    }
+
+    async function addToCartSimple(productId) {
+        if (!currentUser || currentUser.role !== "customer") {
+            showToast("Login sebagai pelanggan!", true);
+            return;
+        }
+        const product = products.find(p => p.id == productId);
+        if (!product) return;
+        
+        let userCart = carts[currentUser.username] || {};
+        let cartKey = getCartKey(productId);
+        
+        if (!userCart[cartKey]) {
+            userCart[cartKey] = {
+                productId: product.id,
+                name: product.name,
+                quantity: 0,
+                variantName: null,
+                variantPrice: product.price,
+                productType: "simple",
+                price: product.price
+            };
+        }
+        userCart[cartKey].quantity++;
+        carts[currentUser.username] = userCart;
+        
+        await updateData("carts", Object.keys(carts).indexOf(currentUser.username) + 1, carts);
+        showToast(`✅ ${product.name} ditambahkan!`);
+        renderCart();
+    }
+
+    async function addToCartVariant(productId, variantIndex, variantName, variantPrice) {
+        if (!currentUser || currentUser.role !== "customer") {
+            showToast("Login sebagai pelanggan!", true);
+            return;
+        }
+        const product = products.find(p => p.id == productId);
+        if (!product) return;
+        
+        let userCart = carts[currentUser.username] || {};
+        let cartKey = getCartKey(productId, variantIndex);
+        
+        if (!userCart[cartKey]) {
+            userCart[cartKey] = {
+                productId: product.id,
+                name: product.name,
+                quantity: 0,
+                variantName: variantName,
+                variantPrice: variantPrice,
+                productType: "variant",
+                price: variantPrice
+            };
+        }
+        userCart[cartKey].quantity++;
+        carts[currentUser.username] = userCart;
+        
+        await updateData("carts", Object.keys(carts).indexOf(currentUser.username) + 1, carts);
+        showToast(`✅ ${product.name} - ${variantName} ditambahkan!`);
+        renderCart();
+    }
+
+    async function updateCartQuantity(cartKey, delta) {
+        if (!currentUser || !carts[currentUser.username]) return;
+        let userCart = carts[currentUser.username];
+        let item = userCart[cartKey];
+        if (item) {
+            let newQty = item.quantity + delta;
+            if (newQty <= 0) {
+                delete userCart[cartKey];
+            } else {
+                item.quantity = newQty;
+            }
+            carts[currentUser.username] = userCart;
+            await updateData("carts", Object.keys(carts).indexOf(currentUser.username) + 1, carts);
+            renderCart();
+        }
+    }
+
+    async function removeFromCart(cartKey) {
+        if (!currentUser || !carts[currentUser.username]) return;
+        delete carts[currentUser.username][cartKey];
+        await updateData("carts", Object.keys(carts).indexOf(currentUser.username) + 1, carts);
+        renderCart();
+    }
+
+    // ==================== RENDER FUNCTIONS ====================
+    function renderProductCard(p) {
+        const isCustomer = currentUser?.role === "customer";
+        const isOwner = currentUser?.role === "owner";
+        
+        if (p.productType === "simple") {
+            return `
+                <div class="card product-card">
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-type-badge">📦 Produk Biasa</div>
+                    <div style="font-size:0.85rem; margin:8px 0;">${p.benefits || ""}</div>
+                    <div class="product-price">Rp ${p.price.toLocaleString()}</div>
+                    <div class="stock-badge">Stok: ${p.stock || 0}</div>
+                    ${isCustomer ? `
+                        <button class="btn-add-cart" onclick="addToCartSimple(${p.id})">
+                            <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                        </button>
+                    ` : (isOwner ? `
+                        <div style="margin-top:12px; display:flex; gap:10px; justify-content:center;">
+                            <button class="btn-small" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-danger" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i> Hapus</button>
+                        </div>
+                    ` : `<p style="margin-top:10px; font-size:0.8rem;">Login sebagai pelanggan untuk membeli</p>`)}
+                </div>
+            `;
+        } else {
+            if (!p.variants || p.variants.length === 0) return "";
+            let variantsHtml = `<select class="variant-select" id="variant-${p.id}" onchange="updateVariantPriceDisplay(${p.id})">`;
+            p.variants.forEach((v, idx) => {
+                variantsHtml += `<option value="${idx}" data-price="${v.price}" data-name="${v.name}">${v.name} - Rp ${v.price.toLocaleString()}</option>`;
+            });
+            variantsHtml += `</select>`;
+            variantsHtml += `<div class="product-price" id="price-${p.id}">Rp ${p.variants[0].price.toLocaleString()}</div>`;
+            
+            return `
+                <div class="card product-card">
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-type-badge">🎚️ Produk Varian</div>
+                    <div style="font-size:0.85rem; margin:8px 0;">${p.benefits || ""}</div>
+                    ${variantsHtml}
+                    ${isCustomer ? `
+                        <button class="btn-add-cart" onclick="addToCartVariantFromSelect(${p.id})">
+                            <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                        </button>
+                    ` : (isOwner ? `
+                        <div style="margin-top:12px; display:flex; gap:10px; justify-content:center;">
+                            <button class="btn-small" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-danger" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i> Hapus</button>
+                        </div>
+                    ` : `<p style="margin-top:10px; font-size:0.8rem;">Login sebagai pelanggan untuk membeli</p>`)}
+                </div>
+            `;
+        }
+    }
+
+    function updateVariantPriceDisplay(productId) {
+        let select = document.getElementById(`variant-${productId}`);
+        let priceDiv = document.getElementById(`price-${productId}`);
+        if (select && priceDiv) {
+            let opt = select.options[select.selectedIndex];
+            let price = opt.getAttribute("data-price");
+            priceDiv.innerHTML = `Rp ${parseInt(price).toLocaleString()}`;
+        }
+    }
+
+    function addToCartVariantFromSelect(productId) {
+        let select = document.getElementById(`variant-${productId}`);
+        if (!select) return;
+        let variantIndex = parseInt(select.value);
+        let opt = select.options[select.selectedIndex];
+        let variantName = opt.getAttribute("data-name");
+        let variantPrice = parseInt(opt.getAttribute("data-price"));
+        addToCartVariant(productId, variantIndex, variantName, variantPrice);
+    }
+
+    // ==================== RENDER HOME ====================
+    function renderHome() {
+        let avg = ratings.length ? (ratings.reduce((a,b)=>a+b.stars,0)/ratings.length).toFixed(1) : 0;
+        let recent = comments.slice(-3).map(c => `<div style="margin:6px 0; padding:6px; border-left: 3px solid var(--accent);"><b>⭐ ${c.stars}/5</b> - ${c.username}: ${c.text}</div>`).join("");
+        document.getElementById("recentComments") && (document.getElementById("recentComments").innerHTML = recent || "<p>Belum ada ulasan.</p>");
+        
+        let stats = getStats();
+        document.getElementById("statsContainer") && (document.getElementById("statsContainer").innerHTML = `
+            <div class="stats-grid">
+                <div class="stat-card glass"><div class="stat-number">${stats.totalVisits}</div><div>Kunjungan</div></div>
+                <div class="stat-card glass"><div class="stat-number">${stats.totalProducts}</div><div>Produk</div></div>
+                <div class="stat-card glass"><div class="stat-number">${stats.totalSold}</div><div>Terjual</div></div>
+                <div class="stat-card glass"><div class="stat-number">Rp ${stats.totalRevenue.toLocaleString()}</div><div>Pendapatan</div></div>
+                <div class="stat-card glass"><div class="stat-number">${stats.totalCustomers}</div><div>Pelanggan</div></div>
+                <div class="stat-card glass"><div class="stat-number">${avg}</div><div>Rating</div></div>
+            </div>
+        `);
+        
+        let featured = products.slice(0,3);
+        let grid = featured.map(p => renderProductCard(p)).join("");
+        document.getElementById("featuredProducts") && (document.getElementById("featuredProducts").innerHTML = grid || "<div class='empty-state'><i class='fas fa-box-open'></i><p>Belum ada produk. Owner silakan tambah produk.</p></div>");
+    }
+
+    function renderProducts() {
+        let grid = products.map(p => renderProductCard(p)).join("");
+        document.getElementById("allProductsList") && (document.getElementById("allProductsList").innerHTML = grid || "<div class='empty-state'><i class='fas fa-box-open'></i><p>Belum ada produk.</p></div>");
+    }
+
+    // ==================== RENDER CART ====================
+    function renderCart() {
+        if (!currentUser || currentUser.role !== "customer") {
+            document.getElementById("cartItems") && (document.getElementById("cartItems").innerHTML = `<div class="empty-state"><i class="fas fa-lock"></i> Login sebagai pelanggan untuk melihat keranjang</div>`);
+            document.getElementById("checkoutBtn") && (document.getElementById("checkoutBtn").innerHTML = "");
+            return;
+        }
+        
+        let userCart = carts[currentUser.username] || {};
+        let cartKeys = Object.keys(userCart);
+        
+        if (cartKeys.length === 0) {
+            document.getElementById("cartItems") && (document.getElementById("cartItems").innerHTML = `<div class="empty-state"><i class="fas fa-shopping-cart"></i> Keranjang belanja kosong</div>`);
+            document.getElementById("checkoutBtn") && (document.getElementById("checkoutBtn").innerHTML = "");
+            return;
+        }
+        
+        let itemsHtml = "";
+        let total = 0;
+        
+        for (let key of cartKeys) {
+            let item = userCart[key];
+            let itemTotal = (item.variantPrice || item.price) * item.quantity;
+            total += itemTotal;
+            let displayName = item.variantName ? `${item.name} (${item.variantName})` : item.name;
+            itemsHtml += `
+                <div class="cart-item">
+                    <div class="cart-item-details">
+                        <div><b>${displayName}</b></div>
+                        <div class="cart-item-price">Rp ${(item.variantPrice || item.price).toLocaleString()}</div>
+                    </div>
+                    <div class="cart-item-qty">
+                        <button class="qty-btn" onclick="updateCartQuantity('${key}', -1)">−</button>
+                        <span style="min-width: 40px; text-align: center; font-weight: bold;">${item.quantity}</span>
+                        <button class="qty-btn" onclick="updateCartQuantity('${key}', 1)">+</button>
+                        <button class="btn-danger" style="margin-left: 8px;" onclick="removeFromCart('${key}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div style="min-width: 120px; text-align: right; font-weight: bold;">Rp ${itemTotal.toLocaleString()}</div>
+                </div>
+            `;
+        }
+        
+        itemsHtml += `<div class="cart-item" style="font-weight: bold; border-top: 2px solid var(--accent); margin-top: 8px; font-size: 1.2rem;">
+            <div>Total</div>
+            <div></div>
+            <div>Rp ${total.toLocaleString()}</div>
+        </div>`;
+        
+        document.getElementById("cartItems") && (document.getElementById("cartItems").innerHTML = itemsHtml);
+        document.getElementById("checkoutBtn") && (document.getElementById("checkoutBtn").innerHTML = `<button class="btn-gold" onclick="showPaymentModal(${total})"><i class="fas fa-credit-card"></i> Checkout & Bayar Sekarang</button>`);
+    }
+
+    // ==================== CHECKOUT ====================
+    function showPaymentModal(total) {
+        let userCart = carts[currentUser.username] || {};
+        let cartKeys = Object.keys(userCart);
+        if (cartKeys.length === 0) return;
+        
+        let items = [];
+        for (let key of cartKeys) {
+            let item = userCart[key];
+            let displayName = item.variantName ? `${item.name} (${item.variantName})` : item.name;
+            items.push(`${displayName} x${item.quantity} = Rp ${((item.variantPrice || item.price) * item.quantity).toLocaleString()}`);
+        }
+        let itemsText = items.join("\n");
+        
+        let modalHtml = `
+            <div class="modal" id="paymentModal">
+                <div class="modal-content glass">
+                    <h3>💳 QRIS Payment</h3>
+                    <img src="${QRIS_LINK}" alt="QRIS Code">
+                    <p><strong>Total: Rp ${total.toLocaleString()}</strong></p>
+                    <p style="font-size: 0.85rem;">Scan QRIS di atas untuk melakukan pembayaran</p>
+                    <button class="btn-gold" onclick="confirmPaymentAndWA(${total}, \`${itemsText.replace(/`/g, '\\`')}\`)"><i class="fab fa-whatsapp"></i> Konfirmasi via WhatsApp</button>
+                    <button class="btn-outline" onclick="closeModal()">Tutup</button>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML("beforeend", modalHtml);
+    }
+
+    function closeModal() { document.getElementById("paymentModal")?.remove(); }
+
+    async function confirmPaymentAndWA(total, itemsText) {
+        let userCart = carts[currentUser.username] || {};
+        let cartKeys = Object.keys(userCart);
+        if (cartKeys.length === 0) return;
+        
+        let orderItems = [];
+        for (let key of cartKeys) {
+            let item = userCart[key];
+            orderItems.push({
+                productName: item.name,
+                variantName: item.variantName || null,
+                price: item.variantPrice || item.price,
+                quantity: item.quantity
+            });
+        }
+        
+        const newOrder = {
+            id: Date.now(),
+            username: currentUser.username,
+            items: orderItems,
+            total: total,
+            status: "Menunggu Konfirmasi",
+            date: new Date().toLocaleString('id-ID')
+        };
+        const saved = await saveData("orders", newOrder);
+        orders.push(saved);
+        
+        carts[currentUser.username] = {};
+        await updateData("carts", Object.keys(carts).indexOf(currentUser.username) + 1, carts);
+        
+        let waMsg = `*KONFIRMASI PEMBAYARAN DYNAN MARKET*\n\nHalo Admin, saya sudah melakukan pembayaran.\n\nDetail Pesanan:\n${itemsText}\n\nTotal: Rp ${total.toLocaleString()}\nTanggal: ${new Date().toLocaleString('id-ID')}\nPelanggan: ${currentUser.username}\n\n*Bukti transfer terlampir.*\n\nMohon segera diproses.`;
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`, '_blank');
+        
+        showToast("Pesanan dibuat! Kirim bukti transfer via WA.");
+        closeModal();
+        renderCart();
+        renderOrders();
+        showPage("orders");
+    }
+
+    // ==================== ORDERS ====================
+    function renderOrders() {
+        if (!currentUser) return;
+        let userOrders = currentUser.role === "owner" ? orders : orders.filter(o => o.username === currentUser.username);
+        if (userOrders.length === 0) {
+            document.getElementById("ordersList") && (document.getElementById("ordersList").innerHTML = `<div class="empty-state">Belum ada pesanan.</div>`);
+            return;
+        }
+        let list = userOrders.map(o => `
+            <div class="card" style="margin-bottom: 1rem; padding: 1.2rem;">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <div><b>Pesanan #${o.id}</b><br><small>${o.date}</small></div>
+                    <div><span class="stock-badge" style="background: ${o.status === 'Selesai' ? '#5cb85c' : '#f0ad4e'}">${o.status}</span></div>
+                </div>
+                <hr style="margin: 10px 0;">
+                <div>${o.items.map(i => `📦 ${i.productName} ${i.variantName ? `(${i.variantName})` : ''} x${i.quantity} = Rp ${(i.price * i.quantity).toLocaleString()}`).join('<br>')}</div>
+                <div style="margin-top: 10px;"><strong>Total: Rp ${o.total.toLocaleString()}</strong></div>
+                ${currentUser.role === "owner" && o.status === "Menunggu Konfirmasi" ? `<button class="btn-outline" style="margin-top: 10px;" onclick="confirmOrder(${o.id})"><i class="fas fa-check-circle"></i> Konfirmasi Selesai</button>` : ""}
+                ${o.status === "Selesai" ? `<div style="margin-top: 8px; color: var(--accent);"><i class="fas fa-check-circle"></i> Pesanan selesai</div>` : ""}
+            </div>
+        `).join("");
+        document.getElementById("ordersList") && (document.getElementById("ordersList").innerHTML = list);
+    }
+
+    async function confirmOrder(orderId) {
+        let order = orders.find(o => o.id == orderId);
+        if (order) {
+            order.status = "Selesai";
+            await updateData("orders", order.id, order);
+            showToast("✅ Pesanan dikonfirmasi selesai!");
+            renderOrders();
+            renderHome();
+        }
+    }
+
+    // ==================== REVIEWS ====================
+    async function submitReview() {
+        if (!currentUser || currentUser.role !== "customer") { showToast("Login sebagai pelanggan!", true); return; }
+        let stars = parseInt(document.getElementById("ratingStars")?.value || 5);
+        let text = document.getElementById("commentText")?.value.trim();
+        if (!text) { showToast("Tulis komentar!", true); return; }
+        
+        const newRating = { username: currentUser.username, stars: stars };
+        const newComment = { username: currentUser.username, stars: stars, text: text, date: new Date().toLocaleString('id-ID') };
+        
+        await saveData("ratings", newRating);
+        await saveData("comments", newComment);
+        ratings.push(newRating);
+        comments.push(newComment);
+        
+        showToast("Terima kasih atas ulasannya! ⭐");
+        if (document.getElementById("commentText")) document.getElementById("commentText").value = "";
+        renderReviews();
+        renderHome();
+    }
+
+    function renderReviews() {
+        if (comments.length === 0) {
+            document.getElementById("allReviews") && (document.getElementById("allReviews").innerHTML = `<div class="empty-state">Belum ada ulasan. Jadi yang pertama!</div>`);
+            return;
+        }
+        let all = comments.slice().reverse().map(c => `<div class="card" style="margin-bottom: 0.8rem; padding: 1rem;"><b>⭐ ${c.stars}/5</b> - <strong>${c.username}</strong> <small>${c.date}</small><p style="margin-top: 8px;">${c.text}</p></div>`).join("");
+        document.getElementById("allReviews") && (document.getElementById("allReviews").innerHTML = all);
+    }
+
+    // ==================== STATS & ACCOUNT ====================
+    function getStats() {
+        let totalSold = 0, totalRevenue = 0;
+        orders.forEach(o => { if (o.status === "Selesai") { totalSold += o.items.reduce((sum, i) => sum + i.quantity, 0); totalRevenue += o.total; } });
+        return { totalSold, totalRevenue, totalProducts: products.length, totalCustomers: users.filter(u => u.role === "customer").length, totalVisits };
+    }
+
+    async function editProfile() {
+        let newU = document.getElementById("editUsername")?.value.trim();
+        let newP = document.getElementById("editPassword")?.value;
+        let newE = document.getElementById("editEmail")?.value.trim();
+        if (newU && newU !== OWNER_USERNAME && !users.find(u => u.username === newU && u.username !== currentUser.username)) {
+            let old = currentUser.username;
+            currentUser.username = newU;
+            let userToUpdate = users.find(u => u.username === old);
+            if (userToUpdate) {
+                userToUpdate.username = newU;
+                await updateData("users", userToUpdate.id, userToUpdate);
+            }
+            if (carts[old]) { carts[newU] = carts[old]; delete carts[old]; }
+            orders.forEach(o => { if (o.username === old) o.username = newU; });
+        }
+        if (newP) currentUser.password = newP;
+        if (newE) currentUser.email = newE;
+        let userToUpdate = users.find(u => u.username === currentUser.username);
+        if (userToUpdate) {
+            userToUpdate.password = currentUser.password;
+            userToUpdate.email = currentUser.email;
+            await updateData("users", userToUpdate.id, userToUpdate);
+        }
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        showToast("✅ Profil berhasil diperbarui!");
+        renderAccount();
+    }
+
+    function renderAccount() {
+        const isOwner = currentUser?.role === "owner";
+        document.getElementById("profileSection") && (document.getElementById("profileSection").innerHTML = `
+            <div class="glass" style="padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <div><i class="fas fa-user-circle" style="font-size: 3rem; color: var(--accent);"></i></div>
+                    <div><h3>${currentUser.username}</h3><p>${currentUser.email || "Email tidak diisi"}<br><span class="badge-owner">${isOwner ? "👑 OWNER" : "👤 Pelanggan"}</span></p></div>
+                    <button class="btn-outline" onclick="logout()">Logout</button>
+                </div>
+                <hr style="margin: 1rem 0;">
+                <h4>Edit Profil</h4>
+                <input type="text" id="editUsername" placeholder="Username Baru" style="margin-bottom: 10px;">
+                <div class="password-wrapper" style="margin-bottom: 10px;">
+                    <input type="password" id="editPassword" placeholder="Password Baru">
+                    <button class="toggle-password" onclick="togglePassword('editPassword', 'editPassIcon')" type="button"><i class="fas fa-eye" id="editPassIcon"></i></button>
+                </div>
+                <input type="email" id="editEmail" placeholder="Email Baru" style="margin-bottom: 10px;">
+                <button class="btn-gold" onclick="editProfile()">Simpan Perubahan</button>
+            </div>
+        `);
+        if (isOwner) {
+            document.getElementById("adminPanel") && (document.getElementById("adminPanel").innerHTML = `
+                <div class="glass" style="padding: 1.5rem; margin-top: 1.5rem;">
+                    <h3><i class="fas fa-crown"></i> Panel Owner</h3>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px;">
+                        <button class="btn-gold" onclick="showPage('manage-products')"><i class="fas fa-boxes"></i> Kelola Produk</button>
+                        <button class="btn-gold" onclick="showPage('orders')"><i class="fas fa-clipboard-list"></i> Semua Pesanan</button>
+                    </div>
+                </div>
+            `);
+        }
+    }
+
+    // ==================== MANAGE PRODUCTS ====================
+    let selectedProductType = "variant";
+
+    function toggleProductType() {
+        selectedProductType = document.getElementById("productTypeSelect")?.value;
+        let variantSection = document.getElementById("variantsSection");
+        let simpleSection = document.getElementById("simpleProductSection");
+        if (selectedProductType === "variant") {
+            if (variantSection) variantSection.style.display = "block";
+            if (simpleSection) simpleSection.style.display = "none";
+        } else {
+            if (variantSection) variantSection.style.display = "none";
+            if (simpleSection) simpleSection.style.display = "block";
+        }
+    }
+
+    function addVariantField() {
+        let container = document.getElementById("variantsContainer");
+        let idx = Date.now();
+        let div = document.createElement("div");
+        div.className = "variant-item";
+        div.id = `variant-${idx}`;
+        div.innerHTML = `<input type="text" placeholder="Nama varian (contoh: 2GB RAM)" class="variant-name"><input type="number" placeholder="Harga" class="variant-price-input"><button class="btn-danger" onclick="removeVariantField('variant-${idx}')"><i class="fas fa-times"></i> Hapus</button>`;
+        container.appendChild(div);
+    }
+
+    function removeVariantField(id) { document.getElementById(id)?.remove(); }
+
+    function getVariantsFromForm() {
+        let variants = [];
+        document.querySelectorAll(".variant-item").forEach(item => {
+            let name = item.querySelector(".variant-name")?.value.trim();
+            let price = parseInt(item.querySelector(".variant-price-input")?.value);
+            if (name && price > 0) variants.push({ name, price });
+        });
+        return variants;
+    }
+
+    async function addProduct() {
+        let name = document.getElementById("prodName")?.value.trim();
+        let type = document.getElementById("prodType")?.value.trim();
+        let benefits = document.getElementById("prodBenefits")?.value.trim();
+        let productType = document.getElementById("productTypeSelect")?.value;
+        
+        if (!name) { showToast("Nama produk wajib diisi!", true); return; }
+        
+        let newProduct = { name, type: type || "Produk", benefits: benefits || "", productType };
+        
+        if (productType === "simple") {
+            let price = parseInt(document.getElementById("simplePrice")?.value);
+            let stock = parseInt(document.getElementById("simpleStock")?.value) || 0;
+            if (!price || price <= 0) { showToast("Harga produk wajib diisi!", true); return; }
+            newProduct.price = price;
+            newProduct.stock = stock;
+        } else {
+            let variants = getVariantsFromForm();
+            if (variants.length === 0) { showToast("Minimal 1 varian!", true); return; }
+            newProduct.variants = variants;
+        }
+        
+        const saved = await saveData("products", newProduct);
+        products.push(saved);
+        showToast("✅ Produk berhasil ditambahkan!");
+        
+        document.getElementById("prodName").value = "";
+        document.getElementById("prodType").value = "";
+        document.getElementById("prodBenefits").value = "";
+        document.getElementById("variantsContainer").innerHTML = "";
+        document.getElementById("simplePrice").value = "";
+        document.getElementById("simpleStock").value = "";
+        
+        renderManageProducts();
+        renderProducts();
+        renderHome();
+    }
+
+    function renderManageProducts() {
+        if (products.length === 0) {
+            document.getElementById("manageProductsList") && (document.getElementById("manageProductsList").innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i> ⚠️ PRODUK KOSONG - TAMBAH PRODUK</div>`);
+            return;
+        }
+        let list = products.map(p => {
+            if (p.productType === "simple") {
+                return `
+                    <div class="card" style="margin-bottom: 0.8rem; padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <div><h4>${p.name}</h4><div class="stock-badge">${p.type || "Produk"} | 📦 Biasa</div><div>💰 Rp ${p.price.toLocaleString()} | 📦 Stok: ${p.stock}</div><div style="font-size:0.8rem;">${p.benefits || ""}</div></div>
+                            <div><button class="btn-small" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i> Edit</button> <button class="btn-danger" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i> Hapus</button></div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="card" style="margin-bottom: 0.8rem; padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <div><h4>${p.name}</h4><div class="stock-badge">${p.type || "Produk"} | 🎚️ Varian</div><div>${p.variants.map(v => `<span class="stock-badge" style="margin-right: 5px;">${v.name} - Rp ${v.price.toLocaleString()}</span>`).join('')}</div><div style="font-size:0.8rem;">${p.benefits || ""}</div></div>
+                            <div><button class="btn-small" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i> Edit</button> <button class="btn-danger" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i> Hapus</button></div>
+                        </div>
+                    </div>
+                `;
+            }
+        }).join("");
+        document.getElementById("manageProductsList") && (document.getElementById("manageProductsList").innerHTML = list);
+    }
+
+    function editProduct(id) {
+        let product = products.find(p => p.id == id);
+        if (product) {
+            document.getElementById("prodName").value = product.name;
+            document.getElementById("prodType").value = product.type || "";
+            document.getElementById("prodBenefits").value = product.benefits || "";
+            document.getElementById("productTypeSelect").value = product.productType;
+            toggleProductType();
+            
+            if (product.productType === "simple") {
+                document.getElementById("simplePrice").value = product.price;
+                document.getElementById("simpleStock").value = product.stock;
+            } else {
+                let container = document.getElementById("variantsContainer");
+                container.innerHTML = "";
+                product.variants.forEach(v => {
+                    let idx = Date.now();
+                    let div = document.createElement("div");
+                    div.className = "variant-item";
+                    div.id = `variant-${idx}`;
+                    div.innerHTML = `<input type="text" placeholder="Nama varian" class="variant-name" value="${v.name.replace(/"/g, '&quot;')}"><input type="number" placeholder="Harga" class="variant-price-input" value="${v.price}"><button class="btn-danger" onclick="removeVariantField('variant-${idx}')"><i class="fas fa-times"></i> Hapus</button>`;
+                    container.appendChild(div);
+                });
+            }
+            deleteProduct(id);
+            showToast("Edit produk, lalu simpan ulang.");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
+    async function deleteProduct(id) {
+        if (confirm("Yakin hapus produk ini?")) {
+            await deleteData("products", id);
+            products = products.filter(p => p.id !== id);
+            showToast("Produk dihapus!");
+            renderManageProducts();
+            renderProducts();
+            renderHome();
+            renderCart();
+        }
+    }
+
+    // ==================== AUTH FORM SWITCH ====================
+    function showRegisterForm() {
+        const authForm = document.getElementById("authForm");
+        const authTitle = document.getElementById("authTitle");
+        if (authForm && authTitle) {
+            authTitle.innerText = "BUAT AKUN ANDA";
+            authForm.innerHTML = `
+                <div class="form-group">
+                    <label>USERNAME</label>
+                    <div class="input-wrapper"><input type="text" id="regUsername" placeholder="Pilih username Anda"></div>
+                </div>
+                <div class="form-group">
+                    <label>PASSWORD</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="regPassword" placeholder="Buat password (min. 3 karakter)">
+                        <button class="toggle-password" onclick="togglePassword('regPassword', 'regPassIcon')" type="button"><i class="fas fa-eye" id="regPassIcon"></i></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>EMAIL (OPSIONAL)</label>
+                    <div class="input-wrapper"><input type="email" id="regEmail" placeholder="Email Anda"></div>
+                </div>
+                <button class="btn-gold" onclick="handleRegister()"><i class="fas fa-user-check"></i> DAFTAR SEKARANG</button>
+                <div class="auth-footer" style="text-align: center; margin-top: 1rem;">
+                    <p style="margin-bottom: 6px;">Sudah punya akun?</p>
+                    <button class="btn-outline" onclick="showLoginForm()" style="width: auto; padding: 8px 20px;">Login di sini</button>
+                </div>
+            `;
+        }
+    }
+
+    function showLoginForm() {
+        const authForm = document.getElementById("authForm");
+        const authTitle = document.getElementById("authTitle");
+        if (authForm && authTitle) {
+            authTitle.innerText = "SELAMAT DATANG, SILAHKAN LOGIN";
+            authForm.innerHTML = `
+                <div class="form-group">
+                    <label>USERNAME</label>
+                    <div class="input-wrapper"><input type="text" id="loginUsername" placeholder="Masukkan username Anda"></div>
+                </div>
+                <div class="form-group">
+                    <label>PASSWORD</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="loginPassword" placeholder="Masukkan password Anda">
+                        <button class="toggle-password" onclick="togglePassword('loginPassword', 'loginPassIcon')" type="button"><i class="fas fa-eye" id="loginPassIcon"></i></button>
+                    </div>
+                </div>
+                <button class="btn-gold" onclick="handleLogin()"><i class="fas fa-key"></i> LOGIN SEKARANG</button>
+                <div class="auth-footer" style="text-align: center; margin-top: 1rem;">
+                    <p style="margin-bottom: 6px;">Belum punya akun?</p>
+                    <button class="btn-outline" onclick="showRegisterForm()" style="width: auto; padding: 8px 20px;">Buat Akun Baru</button>
+                </div>
+            `;
+        }
+    }
+
+    // ==================== RENDER APP ====================
+    function renderApp() {
+        const app = document.getElementById("app");
+        
+        if (!currentUser) {
+            app.innerHTML = `
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <div class="auth-logo">DYNAN MARKET</div>
+                            <div class="auth-subtitle">PREMIUM MARKETPLACE</div>
+                            <div class="auth-divider"></div>
+                            <div class="auth-title" id="authTitle">SELAMAT DATANG, SILAHKAN LOGIN</div>
+                        </div>
+                        <div id="authForm">
+                            <div class="form-group">
+                                <label>USERNAME</label>
+                                <div class="input-wrapper"><input type="text" id="loginUsername" placeholder="Masukkan username Anda"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>PASSWORD</label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="loginPassword" placeholder="Masukkan password Anda">
+                                    <button class="toggle-password" onclick="togglePassword('loginPassword', 'loginPassIcon')" type="button"><i class="fas fa-eye" id="loginPassIcon"></i></button>
+                                </div>
+                            </div>
+                            <button class="btn-gold" onclick="handleLogin()"><i class="fas fa-key"></i> LOGIN SEKARANG</button>
+                            <div class="auth-footer" style="text-align: center; margin-top: 1rem;">
+                                <p style="margin-bottom: 6px;">Belum punya akun?</p>
+                                <button class="btn-outline" onclick="showRegisterForm()" style="width: auto; padding: 8px 20px;">Buat Akun Baru</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+        
+        const isOwner = currentUser.role === "owner";
+        app.innerHTML = `
+            <div class="navbar">
+                <button class="menu-btn" onclick="openSidebar()"><i class="fas fa-bars"></i></button>
+                <div class="logo" onclick="showPage('home')"><div class="logo-text">DYNAN MARKET</div><div class="logo-sub">PREMIUM SOLUTIONS</div></div>
+                <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+            </div>
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-header"><h3>Menu</h3><button class="close-sidebar" onclick="closeSidebar()"><i class="fas fa-times"></i></button></div>
+                <div class="sidebar-menu">
+                    <button onclick="showPage('home')"><i class="fas fa-home"></i> Beranda</button>
+                    <button onclick="showPage('products')"><i class="fas fa-box"></i> Produk</button>
+                    <button onclick="showPage('cart')"><i class="fas fa-shopping-cart"></i> Keranjang</button>
+                    <button onclick="showPage('orders')"><i class="fas fa-clipboard-list"></i> Pesanan Saya</button>
+                    <button onclick="showPage('reviews')"><i class="fas fa-star"></i> Ulasan</button>
+                    <button onclick="showPage('account')"><i class="fas fa-user"></i> Akun</button>
+                    <button onclick="showPage('contact')"><i class="fas fa-phone"></i> Kontak</button>
+                    ${isOwner ? `<button onclick="showPage('manage-products')"><i class="fas fa-tools"></i> Kelola Produk</button>` : ''}
+                </div>
+            </div>
+            <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+            <div class="container">
+                <div id="page-home" class="page active">
+                    <div class="hero glass">
+                        <h2>⭐ Selamat Datang, ${currentUser.username}!</h2>
+                        <p>Exclusive Hosting Solutions untuk Bisnis Anda</p>
+                        <button class="btn-gold" onclick="window.open('${MAPS_LINK}', '_blank')"><i class="fas fa-map-marker-alt"></i> 📍 Lokasi Toko Kami</button>
+                    </div>
+                    <div class="glass" style="padding: 1.2rem; margin-bottom: 1.5rem;"><div id="statsContainer"></div></div>
+                    <div class="glass" style="padding: 1.2rem; margin-bottom: 1.5rem; text-align: center;"><h3>⭐ Rating: <span id="avgRating">0</span>/5</h3><div id="recentComments"></div></div>
+                    <div><h3>🔥 Produk Unggulan</h3><div id="featuredProducts" class="products-grid"></div></div>
+                </div>
+                <div id="page-products" class="page"><h2>📦 Semua Produk</h2><div id="allProductsList" class="products-grid"></div></div>
+                <div id="page-cart" class="page"><h2>🛒 Keranjang Belanja</h2><div id="cartItems" class="glass" style="padding: 0.8rem;"></div><div id="checkoutBtn" style="margin-top: 1rem;"></div></div>
+                <div id="page-orders" class="page"><h2>📋 Pesanan Saya</h2><div id="ordersList"></div></div>
+                <div id="page-reviews" class="page">
+                    <h2>⭐ Ulasan & Komentar</h2>
+                    ${currentUser.role === "customer" ? `
+                    <div class="glass" style="padding: 1.2rem; margin-bottom: 1.5rem;">
+                        <h3>💬 Berikan Ulasan</h3>
+                        <div class="form-group"><label>Rating Bintang</label><select id="ratingStars" style="width: auto; padding: 10px;"><option value="5">⭐⭐⭐⭐⭐ (5)</option><option value="4">⭐⭐⭐⭐ (4)</option><option value="3">⭐⭐⭐ (3)</option><option value="2">⭐⭐ (2)</option><option value="1">⭐ (1)</option></select></div>
+                        <div class="form-group"><label>Komentar</label><textarea id="commentText" rows="3" placeholder="Tulis komentar Anda..."></textarea></div>
+                        <button class="btn-gold" onclick="submitReview()"><i class="fas fa-paper-plane"></i> Kirim Ulasan</button>
+                    </div>
+                    ` : `<div class="glass" style="padding: 1.2rem; text-align: center;">Login sebagai pelanggan untuk memberi ulasan</div>`}
+                    <div id="allReviews"></div>
+                </div>
+                <div id="page-account" class="page"><h2>👤 Akun Saya</h2><div id="profileSection"></div><div id="adminPanel"></div></div>
+                <div id="page-manage-products" class="page">
+                    <h2>🔧 Kelola Produk <span style="font-size: 0.7rem;">(Owner Only)</span></h2>
+                    <div class="glass" style="padding: 1.2rem; margin-bottom: 1.5rem;">
+                        <h3><i class="fas fa-plus-circle"></i> Tambah Produk Baru</h3>
+                        <div class="form-group"><label>Nama Produk</label><input type="text" id="prodName" placeholder="Contoh: Panel Pterodactyl / Hosting Premium"></div>
+                        <div class="form-group"><label>Jenis/Kategori Produk</label><input type="text" id="prodType" placeholder="Contoh: Hosting, VPS, Domain"></div>
+                        <div class="form-group"><label>Benefits / Keuntungan</label><textarea id="prodBenefits" rows="2" placeholder="✅ Fast Respon ✅ Anti Delay ✅ Support 24/7"></textarea></div>
+                        <div class="form-group">
+                            <label>Tipe Produk</label>
+                            <select id="productTypeSelect" onchange="toggleProductType()">
+                                <option value="variant">🎚️ Produk dengan Varian (banyak pilihan harga)</option>
+                                <option value="simple">📦 Produk Biasa (1 harga)</option>
+                            </select>
+                        </div>
+                        <div id="variantsSection">
+                            <label><i class="fas fa-tags"></i> Daftar Varian (Nama & Harga)</label>
+                            <div id="variantsContainer"></div>
+                            <button class="btn-outline" style="margin: 8px 0;" onclick="addVariantField()"><i class="fas fa-plus"></i> + Tambah Varian</button>
+                        </div>
+                        <div id="simpleProductSection" style="display: none;">
+                            <div class="form-group"><label>Harga Produk (Rp)</label><input type="number" id="simplePrice" placeholder="Contoh: 150000"></div>
+                            <div class="form-group"><label>Stok Produk</label><input type="number" id="simpleStock" placeholder="Jumlah stok tersedia" value="0"></div>
+                        </div>
+                        <button class="btn-gold" onclick="addProduct()" style="margin-top: 8px;"><i class="fas fa-save"></i> Simpan Produk</button>
+                    </div>
+                    <h3>📋 Daftar Produk</h3>
+                    <div id="manageProductsList"></div>
+                </div>
+                <div id="page-contact" class="page">
+                    <h2>📞 Hubungi Kami</h2>
+                    <div class="glass" style="padding: 1.5rem; text-align: center;">
+                        <div style="display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center;">
+                            <button class="btn-gold" onclick="window.open('https://wa.me/${WHATSAPP_NUMBER}', '_blank')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                            <button class="btn-gold" onclick="window.open('https://instagram.com/nannhtgl', '_blank')"><i class="fab fa-instagram"></i> Instagram</button>
+                            <button class="btn-gold" onclick="window.open('https://t.me/dynaniniwe', '_blank')"><i class="fab fa-telegram"></i> Telegram</button>
+                        </div>
+                        <hr style="margin: 1rem 0;">
+                        <button class="btn-outline" onclick="window.open('${MAPS_LINK}', '_blank')"><i class="fas fa-map-marker-alt"></i> 📍 Google Maps</button>
+                    </div>
+                </div>
+            </div>
+            <footer><p>© 2025 DYNAN MARKET | <i class="fas fa-chart-line"></i> Total Kunjungan: ${totalVisits} | Premium Marketplace</p></footer>
+        `;
+        
+        setTimeout(() => {
+            renderHome(); renderProducts(); renderCart(); renderOrders(); renderReviews(); renderAccount();
+            if (isOwner) renderManageProducts();
+            toggleProductType();
+        }, 50);
+    }
+
+    // ==================== EXPOSE GLOBAL FUNCTIONS ====================
+    window.toggleTheme = toggleTheme;
+    window.togglePassword = togglePassword;
+    window.handleLogin = handleLogin;
+    window.handleRegister = handleRegister;
+    window.showRegisterForm = showRegisterForm;
+    window.showLoginForm = showLoginForm;
+    window.logout = logout;
+    window.closeSidebar = closeSidebar;
+    window.openSidebar = openSidebar;
+    window.showPage = showPage;
+    window.addToCartSimple = addToCartSimple;
+    window.addToCartVariant = addToCartVariant;
+    window.addToCartVariantFromSelect = addToCartVariantFromSelect;
+    window.updateCartQuantity = updateCartQuantity;
+    window.removeFromCart = removeFromCart;
+    window.updateVariantPriceDisplay = updateVariantPriceDisplay;
+    window.showPaymentModal = showPaymentModal;
+    window.closeModal = closeModal;
+    window.confirmPaymentAndWA = confirmPaymentAndWA;
+    window.confirmOrder = confirmOrder;
+    window.submitReview = submitReview;
+    window.editProfile = editProfile;
+    window.addVariantField = addVariantField;
+    window.removeVariantField = removeVariantField;
+    window.addProduct = addProduct;
+    window.editProduct = editProduct;
+    window.deleteProduct = deleteProduct;
+    window.toggleProductType = toggleProductType;
+
+    // ==================== START ====================
+    const savedUser = localStorage.getItem("currentUser");
+    if (savedUser) {
+        try {
+            currentUser = JSON.parse(savedUser);
+        } catch(e) {
+            currentUser = null;
+            localStorage.removeItem("currentUser");
+        }
+    }
+
+    fetchData();
+</script>
+</body>
+</html>
