@@ -205,15 +205,10 @@
 
 <script>
     // ==================== KONFIGURASI ====================
-    // === GANTI LINK DI BAWAH INI ===
-    // Untuk localhost: API_URL = "http://localhost:3000"
-    // Untuk online: API_URL = "https://dynan-market.onrender.com"
-    const API_URL = "http://localhost:3000";
-    // =================================
-
+    const API_URL = "https://dynan-market.onrender.com";
     const OWNER_USERNAME = "dynan";
     const OWNER_PASSWORD = "257368419";
-    const WHATSAPP_NUMBER = "6283837266823"; // ✅ UPDATED
+    const WHATSAPP_NUMBER = "6283837266823";
     const MAPS_LINK = "https://maps.app.goo.gl/fr1AMLqnS6DnV1m69";
     const QRIS_LINK = "https://freeimage.host/i/C9S8XI9";
 
@@ -245,18 +240,8 @@
             orders = await ordersRes.json();
             ratings = await ratingsRes.json();
             comments = await commentsRes.json();
-            totalVisits = await visitsRes.json();
-            
-            // Update total visits
-            if (!localStorage.getItem("visitor_id")) {
-                localStorage.setItem("visitor_id", Date.now() + '_' + Math.random().toString(36).substr(2, 6));
-                totalVisits++;
-                await fetch(`${API_URL}/totalVisits`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(totalVisits)
-                });
-            }
+            const visitsData = await visitsRes.json();
+            totalVisits = visitsData.length > 0 ? visitsData[0].count : 0;
             
             document.getElementById("loading").style.display = "none";
             renderApp();
@@ -266,7 +251,6 @@
                     <i class="fas fa-wifi" style="font-size:3rem; color:var(--accent);"></i>
                     <h3>❌ Gagal terhubung ke server!</h3>
                     <p style="margin:10px 0;">Pastikan server JSON sudah berjalan.</p>
-                    <p style="font-size:0.8rem;">Jalankan: <code>json-server --watch db.json --port 3000</code></p>
                     <button class="btn-gold" onclick="location.reload()">🔄 Refresh</button>
                 </div>
             `;
@@ -274,7 +258,6 @@
     }
 
     async function saveData(endpoint, data) {
-        // Untuk data yang memerlukan POST
         const response = await fetch(`${API_URL}/${endpoint}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -340,7 +323,7 @@
             showToast(`✅ Selamat datang, ${username}!`);
             renderApp();
         } else {
-            showToast("❌ Login gagal!", true);
+            showToast("❌ Login gagal! Username atau password salah.", true);
         }
     }
 
@@ -1215,24 +1198,16 @@
     window.toggleProductType = toggleProductType;
 
     // ==================== START ====================
-    // Cek user session
     const savedUser = localStorage.getItem("currentUser");
     if (savedUser) {
         try {
             currentUser = JSON.parse(savedUser);
-            // Cek apakah user masih valid di database
-            const userExists = users.find(u => u.username === currentUser.username);
-            if (!userExists) {
-                currentUser = null;
-                localStorage.removeItem("currentUser");
-            }
         } catch(e) {
             currentUser = null;
             localStorage.removeItem("currentUser");
         }
     }
 
-    // Fetch data dari server
     fetchData();
 </script>
 </body>
