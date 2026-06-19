@@ -1,0 +1,19 @@
+{
+  "products": [],
+  "users": [
+    {
+      "username": "dynan",
+      "password": "257368419",
+      "role": "owner",
+      "email": "owner@dynan.com",
+      "createdAt": "2025-06-19T10:00:00.000Z",
+      "id": 1
+    }
+  ],
+  "carts": {},
+  "orders": [],
+  "ratings": [],
+  "comments": [],
+  "totalVisits": 0,
+  "visitors": []
+}
